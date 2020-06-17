@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2>Get In Touch</h2>
+                <h2 class="mt-5">Get In Touch</h2>
                 <?php foreach ($alamat as $a) : ?>
                     <ul>
                         <li><?= $a['tipe']; ?></li>
