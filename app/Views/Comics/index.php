@@ -4,7 +4,13 @@
 <div class="container">
     <div class="row">
         <div class="col">
+            <a href="/comics/create" class="btn btn-primary my-3">Add Comics List Form</a>
             <h2 class="mt-5">Comic List</h2>
+            <?php if (session()->getFlashdata('Message')) : ?>
+                <div class="alert alert-success" role="alert">
+                    <?= session()->getFlashdata('Message'); ?>
+                </div>
+            <?php endif; ?>
             <table class="table table-light">
                 <thead>
                     <tr>
@@ -21,7 +27,7 @@
                             <th scope="row"><?= $i++; ?></th>
                             <td><img src="/img/<?= $c['cover']; ?>" class="cover" alt=""></td>
                             <td><?= $c['title']; ?></td>
-                            <td><a href="" class="btn btn-success">Detail</a></td>
+                            <td><a href="/comics/<?= $c['slug']; ?>" class="btn btn-success">Detail</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
