@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ComicsModel;
+use CodeIgniter\Validation\Rules;
 
 class Comics extends BaseController
 {
@@ -39,7 +40,8 @@ class Comics extends BaseController
     public function create()
     {
         $data = [
-            'title' => 'Add Comics List Form'
+            'title' => 'Add Comics List Form',
+            'validation' => \config\services::validation()
         ];
 
         return view('comics/create', $data);
@@ -47,6 +49,31 @@ class Comics extends BaseController
 
     public function save()
     {
+        if (!$this->validate([
+            'title' => [
+                'rules' => 'required|is_unique[comics.title]',
+                'errors' => [
+                    'required' => '{field} comics title must be filled.',
+                    'is_unique' => '{field} comics title was registered'
+                ]
+            ],
+            'author' => [
+                'rules' => 'required[comics.author]',
+                'errors' => 'required[{field} comics author must be filled.]'
+
+            ],
+            'publisher' => [
+                'rules' => 'required[comics.publisher]',
+                'errors' => 'required[{field} comics publisher must be filled.]'
+            ],
+            'cover' => [
+                'rules' => 'required[comics.cover]',
+                'errors' => 'required[{field} comics cover must be filled.]'
+            ]
+        ])) {
+            $validation = \config\services::validation();
+            return redirect()->to('/comics/create')->withInput()->with('validation', $validation);
+        }
         $slug = url_title($this->request->getVar('title'), '-', true);
         $this->comicsModel->save([
             'title' => $this->request->getVar('title'),
