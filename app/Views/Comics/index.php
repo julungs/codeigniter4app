@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <a href="/comics/create" class="btn btn-primary my-3">Add Comics List Form</a>
             <h2 class="mt-5">Comic List</h2>
+            <a href="/comics/create" class="btn btn-primary my-3">Add Comics List Form</a>
             <?php if (session()->getFlashdata('Message')) : ?>
                 <div class="alert alert-success" role="alert">
                     <?= session()->getFlashdata('Message'); ?>
