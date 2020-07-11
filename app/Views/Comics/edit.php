@@ -4,9 +4,10 @@
     <div class="row">
         <div class="col-8">
             <h2 class="mt-5">Edit Comics</h2>
-            <form action="/comics/update/<?= $comics['id']; ?>" method="post">
+            <form action="/comics/update/<?= $comics['id']; ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="slug" value="<?= $comics['slug']; ?>">
+                <input type="hidden" name="oldCover" value="<?= $comics['cover']; ?>">
                 <div class="form-group row">
                     <label for="title" class="col-sm-2 col-form-label">Title</label>
                     <div class="col-sm-10">
@@ -36,16 +37,23 @@
                 </div>
                 <div class="form-group row">
                     <label for="cover" class="col-sm-2 col-form-label">Cover</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="cover" name="cover" value="<?= (old('cover')) ? old('cover') : $comics['cover']; ?>">
-                        <div class="invalid-feedback">
-                            <?= $validation->getError('cover'); ?>
+                    <div class="col-sm-2">
+                        <img src="/img/<?= $comics['cover']; ?>" class="img-thumbnail img-preview">
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="cover" name="cover" onchange="preview()">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('cover'); ?>
+                            </div>
+                            <label class="custom-file-label" for="cover"><?= $comics['cover']; ?></label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Update Data</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a href="/comics/<?= $comics['slug']; ?>" class="btn btn-secondary">Cancel</a>
                     </div>
                 </div>
             </form>

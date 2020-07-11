@@ -52,19 +52,29 @@ class Comics extends BaseController
             ],
             'author' => [
                 'rules' => 'required[comics.author]',
-                'errors' => 'The author field is required.'
+                'error' => 'The author field is required.'
             ],
             'publisher' => [
                 'rules' => 'required[comics.publisher]',
                 'errors' => 'The publisher field is required.'
             ],
             'cover' => [
-                'rules' => 'required[comics.cover]',
-                'errors' => 'The cover field is required.'
+                'rules' => 'max_size[cover,2048]|is_image[cover]|mime_in[cover,image/png,image/jpeg,image/jpg]',
+                'errors' => [
+                    'max_size' => 'The image file size is too big',
+                    'is_image' => 'The choosen file is not an image',
+                    'mime_in' => 'The choosen file is not an image'
+                ]
             ]
         ])) {
-            $validation = \config\services::validation();
-            return redirect()->to('/comics/create')->withInput()->with('validation', $validation);
+            return redirect()->to('/comics/create')->withInput();
+        }
+        $coverFile = $this->request->getFile('cover');
+        if ($coverFile->getError() == 4) {
+            $coverTitle = 'FishIn.jpeg';
+        } else {
+            $coverTitle = $coverFile->getRandomName();
+            $coverFile->move('img', $coverTitle);
         }
         $slug = url_title($this->request->getVar('title'), '-', true);
         $this->comicsModel->save([
@@ -72,7 +82,7 @@ class Comics extends BaseController
             'slug' => $slug,
             'author' => $this->request->getVar('author'),
             'publisher' => $this->request->getVar('publisher'),
-            'cover' => $this->request->getVar('cover')
+            'cover' => $coverTitle
         ]);
         session()->setFlashdata('Message', 'Data Successfully Added.');
         return redirect()->to('/comics');
@@ -80,6 +90,10 @@ class Comics extends BaseController
 
     public function delete($id)
     {
+        $comics = $this->comicsModel->find($id);
+        if ($comics['cover'] != 'FishIn.jpeg') {
+            unlink('img/' . $comics['cover']);
+        }
         $this->comicsModel->delete($id);
         session()->setFlashdata('Message', 'Data Successfully Deleted.');
         return redirect()->to('/comics');
@@ -121,12 +135,27 @@ class Comics extends BaseController
                 'errors' => 'The publisher field is required.'
             ],
             'cover' => [
-                'rules' => 'required[comics.cover]',
-                'errors' => 'The cover field is required.'
+                'rules' => 'max_size[cover,2048]|is_image[cover]|mime_in[cover,image/png,image/jpeg,image/jpg]',
+                'errors' => [
+                    'max_size' => 'The image file size is too big',
+                    'is_image' => 'The choosen file is not an image',
+                    'mime_in' => 'The choosen file is not an image'
+                ]
             ]
         ])) {
-            $validation = \config\services::validation();
-            return redirect()->to('/comics/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
+            return redirect()->to('/comics/edit/' . $this->request->getVar('slug'))->withInput();
+        }
+        $coverFile = $this->request->getFile('cover');
+        $oldCover = $this->request->getVar('oldCover');
+        if ($coverFile->getError() == 4) {
+            $coverTitle = $oldCover;
+        } else {
+            $coverTitle = $coverFile->getRandomName();
+            $coverFile->move('img', $coverTitle);
+            if ($oldCover != 'FishIn.jpeg') {
+                // unlink('img/' . $comics['cover']);
+                unlink('img/' . $oldCover);
+            }
         }
         $slug = url_title($this->request->getVar('title'), '-', true);
         $this->comicsModel->save([
@@ -135,7 +164,7 @@ class Comics extends BaseController
             'slug' => $slug,
             'author' => $this->request->getVar('author'),
             'publisher' => $this->request->getVar('publisher'),
-            'cover' => $this->request->getVar('cover')
+            'cover' => $coverTitle
         ]);
         session()->setFlashdata('Message', 'Data Successfully Updated.');
         return redirect()->to('/comics');

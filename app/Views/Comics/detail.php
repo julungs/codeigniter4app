@@ -19,9 +19,8 @@
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="Delete">
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Do You Want to Delete Comics <?= $comics['title']; ?>?');">Delete</button>
+                                <a href="/comics" class="btn btn-secondary">Back to Comics List</a>
                             </form>
-                            <br><br>
-                            <a href="/comics">Back to Comics List</a>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-8">
             <h2 class="mt-5">Add Comics List Form</h2>
-            <form action="/comics/save" method="post">
+            <form action="/comics/save" method="post" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="form-group row">
                     <label for="title" class="col-sm-2 col-form-label">Title</label>
@@ -35,16 +35,23 @@
                 </div>
                 <div class="form-group row">
                     <label for="cover" class="col-sm-2 col-form-label">Cover</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="cover" name="cover" value="<?= old('cover'); ?>">
-                        <div class="invalid-feedback">
-                            <?= $validation->getError('cover'); ?>
+                    <div class="col-sm-2">
+                        <img src="/img/FishIn.jpeg" class="img-thumbnail img-preview">
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="cover" name="cover" onchange="preview()">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('cover'); ?>
+                            </div>
+                            <label class="custom-file-label" for="cover">Choose file</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <button type="submit" class="btn btn-primary">Add Data</button>
+                        <a href="/comics" class="btn btn-secondary">Cancel</a>
                     </div>
                 </div>
             </form>
