@@ -1,7 +1,25 @@
+body {
+    position: relative;
+}
+
 .cover {
     width: 100px;
 }
 
 .table>tbody>tr>* {
     vertical-align: middle;
+}
+
+.footer {
+    color: grey;
+    background-color: #f8f9fa;
+    text-align: center;
+    height: 60px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.footer>p {
+    margin: 0px;
 }

@@ -112,11 +112,6 @@ class Comics extends BaseController
     public function update($id)
     {
         $oldComics = $this->comicsModel->getComics($this->request->getVar('slug'));
-        // if ($oldComics['title'] == $this->request->getVar('title')) {
-        //     $title_rule = 'required';
-        // } else {
-        //     $title_rule = 'required|is_unique[comics.title]';
-        // }
         $title_rule = $oldComics['title'] == $this->request->getVar('title') ? 'required' : 'required|is_unique[comics.title]';
         if (!$this->validate([
             'title' => [

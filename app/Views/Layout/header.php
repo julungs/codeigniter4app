@@ -6,16 +6,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item <?= $title == 'Home | JS' ? 'active' : '' ?>">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?= $title == 'About Me' ? 'active' : '' ?>">
                     <a class="nav-link" href="/Pages/about">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Pages/contact">Contact</a>
+                <li class="nav-item <?= $title == 'Contacts List' ? 'active' : '' ?>">
+                    <a class="nav-link" href="/Contacts">Contacts</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?= $title == 'Comics List' ? 'active' : '' ?>">
                     <a class="nav-link" href="/Comics">Comics</a>
                 </li>
 

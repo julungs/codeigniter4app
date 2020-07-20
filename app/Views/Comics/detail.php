@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h2 class="mt-5">Comic Detail</h2>
+            <h2 class="mt-2">Comic Detail</h2>
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">

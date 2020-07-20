@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h2 class="mt-5">Add Comics List Form</h2>
+            <h2 class="mt-2">Add Comics List Form</h2>
             <form action="/comics/save" method="post" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="form-group row">

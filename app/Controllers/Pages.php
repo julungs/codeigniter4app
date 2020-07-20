@@ -22,25 +22,6 @@ class Pages extends BaseController
         ];
         return view('Pages/about', $data);
     }
-    public function contact()
-    {
-        $data = [
-            'title' => 'Contact Us',
-            'alamat' => [
-                [
-                    'tipe' => 'Rumah',
-                    'alamat' => 'Jl Kebenaran',
-                    'kota' => 'Madinah'
-                ],
-                [
-                    'tipe' => 'Kantor',
-                    'alamat' => 'Jl Peradaban',
-                    'kota' => 'Madinah'
-                ]
-            ]
-        ];
-        return view('Pages/contact', $data);
-    }
 
     //--------------------------------------------------------------------
 

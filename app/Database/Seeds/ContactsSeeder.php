@@ -11,18 +11,21 @@ class ContactsSeeder extends \CodeIgniter\Database\Seeder
         // $data = [
         //     [
         //         'name' => 'alpha',
+        //         'slug' => 'alpha',
         //         'phone' => '081234567890',
         //         'email' => 'alpha@theempire.com',
         //         'created_at' => Time::now(),
         //         'updated_at' => Time::now(),
         //     ], [
         //         'name' => 'beta',
+        //         'slug' => 'beta',
         //         'phone' => '081234567890',
         //         'email' => 'beta@theempire.com',
         //         'created_at' => Time::now(),
         //         'updated_at' => Time::now(),
         //     ], [
         //         'name' => 'charlie',
+        //         'slug' => 'charlie',
         //         'phone' => '081234567890',
         //         'email' => 'charlie@theempire.com',
         //         'created_at' => Time::now(),
@@ -33,10 +36,13 @@ class ContactsSeeder extends \CodeIgniter\Database\Seeder
 
 
         // fzaninotto/Faker
-        $faker = \Faker\Factory::create('ms_MY');
+        $faker = \Faker\Factory::create('id_ID');
         for ($i = 0; $i < 10; $i++) {
+            $name = $faker->name;
+            $slug = url_title($name, '-', true);
             $data = [
-                'name' => $faker->name,
+                'name' => $name,
+                'slug' => $slug,
                 'phone' => $faker->e164PhoneNumber,
                 'email' => $faker->safeEmail,
                 'created_at' => Time::now(),
@@ -48,7 +54,7 @@ class ContactsSeeder extends \CodeIgniter\Database\Seeder
 
         // Simple Queries
         // $this->db->query(
-        //     "INSERT INTO contacts (name, phone, email, created_at, updated_at) VALUES(:name:, :phone:, :email:, :created_at:, :updated_at:)",
+        //     "INSERT INTO contacts (name, slug, phone, email, created_at, updated_at) VALUES(:name:, :slug:, :phone:, :email:, :created_at:, :updated_at:)",
         //     $data
         // );
 

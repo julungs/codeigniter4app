@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h2 class="mt-5">Edit Comics</h2>
+            <h2 class="mt-2">Edit Comics</h2>
             <form action="/comics/update/<?= $comics['id']; ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="slug" value="<?= $comics['slug']; ?>">

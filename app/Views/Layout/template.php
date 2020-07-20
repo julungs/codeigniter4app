@@ -17,9 +17,10 @@
 
 <body>
 
-    <?= $this->include('layout/navbar'); ?>
+    <?= $this->include('layout/header'); ?>
 
     <?= $this->renderSection('content'); ?>
+
 
 
     <!-- Optional JavaScript -->
