@@ -5,11 +5,11 @@
     <h2 class="mt-2">Contacts List</h2>
     <div class="row">
         <div class="col-md-5">
-            <form action="<?= base_url('contacts/index'); ?>" method="post">
+            <form action="" method="post">
                 <div class="input-group mb-1">
                     <input type="text" class="form-control" placeholder="Search Keyword..." name="keyword" autocomplete="off" autofocus>
                     <div class="input-group-append">
-                        <input class="btn btn-primary" type="submit" name="submit">
+                        <button class="btn btn-primary" type="submit" name="submit">Search</button>
                     </div>
                 </div>
             </form>
@@ -20,7 +20,7 @@
             <a href="/contacts/create" class="btn btn-primary my-3">Add Contacts List Form</a>
             <?php if (session()->getFlashdata('Message')) : ?>
                 <div class="alert alert-success" role="alert">
-                    <?= session()->getFlashdata('Message'); ?>
+                    Data Successfully <span class="font-weight-bold"><?= session()->getFlashdata('Message'); ?></span>
                 </div>
             <?php endif; ?>
             <table class="table table-sm">
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1; ?>
+                    <?php $i = 1 + ($perPage * ($currentPage - 1)); ?>
                     <?php foreach ($contacts as $c) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
@@ -42,7 +42,7 @@
                             <td><?= $c['phone']; ?></td>
                             <td><?= $c['email']; ?></td>
                             <td>
-                                <a href="/contacts/delete/<?= $c['slug']; ?>" class="btn btn-success">Detail</a>
+                                <a href="/contacts/<?= $c['slug']; ?>" class="btn btn-success">Detail</a>
                                 <a href="/contacts/edit/<?= $c['slug']; ?>" class="btn btn-warning">Edit</a>
                                 <form action="/contacts/<?= $c['id']; ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
@@ -54,7 +54,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <?= $pager->links(); ?>
+            <?= $pager->links($group, $pagination); ?>
         </div>
     </div>
 </div>

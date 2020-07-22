@@ -17,4 +17,9 @@ class ContactsModel extends Model
         }
         return $this->where(['slug' => $slug])->first();
     }
+
+    public function searchContacts($keyword)
+    {
+        return $this->table('contacts')->like('name', $keyword);
+    }
 }

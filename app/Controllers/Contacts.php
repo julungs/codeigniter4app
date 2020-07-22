@@ -15,22 +15,25 @@ class Contacts extends BaseController
 
     public function index()
     {
-        // $pager = \config\services::pager();
-        $pager = service('pager');
-        $uri = service('uri');
-
-        if (isset($_POST['submit'])) {
-            $data['keyword'] = $_POST['keyword'];
-            // echo $data['keyword'];
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword) {
+            $contacts = $this->contactsModel->searchContacts($keyword);
         } else {
-            $data['keyword'] = null;
+            $contacts = $this->contactsModel;
         }
-
+        $perPage = 5;
+        $group = 'contacts';
+        $currentPage = $this->request->getVar('page_contacts') ? $this->request->getVar('page_contacts') : 1;
+        $pagination = 'contactsPagination';
         $data = [
             'title' => 'Contacts List',
             // 'contacts' => $this->contactsModel->getContacts(),
-            'contacts' => $this->contactsModel->paginate(8),
-            'pager' => $this->contactsModel->pager
+            'contacts' => $contacts->paginate($perPage, $group),
+            'pager' => $contacts->pager,
+            'perPage' => $perPage,
+            'group' => $group,
+            'currentPage' => $currentPage,
+            'pagination' => $pagination
         ];
         return view('contacts/index', $data);
     }
@@ -83,14 +86,14 @@ class Contacts extends BaseController
             'phone' => $this->request->getVar('phone'),
             'email' => $this->request->getVar('email'),
         ]);
-        session()->setFlashdata('Message', 'Data Successfully Added.');
+        session()->setFlashdata('Message', 'ADDED.');
         return redirect()->to('/contacts');
     }
 
     public function delete($id)
     {
         $this->contactsModel->delete($id);
-        session()->setFlashdata('Message', 'Data Successfully Deleted.');
+        session()->setFlashdata('Message', 'DELETED.');
         return redirect()->to('/contacts');
     }
 
@@ -135,7 +138,7 @@ class Contacts extends BaseController
             'phone' => $this->request->getVar('phone'),
             'email' => $this->request->getVar('email'),
         ]);
-        session()->setFlashdata('Message', 'Data Successfully Updated.');
+        session()->setFlashdata('Message', 'UPDATED.');
         return redirect()->to('/contacts');
     }
 }
