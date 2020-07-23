@@ -116,7 +116,7 @@ class Contacts extends BaseController
                 'errors' => 'The name field is required.',
             ],
             'phone' => [
-                'rules' => 'required[contacts.name]|min_length[12]|max_length[14]',
+                'rules' => 'required[contacts.phone]|min_length[12]|max_length[14]',
                 'errors' => [
                     'The phone field is required.',
                     'The minimum length is 12 characters.',

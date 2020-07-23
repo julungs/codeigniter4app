@@ -4,7 +4,7 @@ namespace App\Database\Seeds;
 
 use CodeIgniter\I18n\Time;
 
-class ContactsSeeder extends \CodeIgniter\Database\Seeder
+class ComicsSeeder extends \CodeIgniter\Database\Seeder
 {
     public function run()
     {
@@ -31,18 +31,19 @@ class ContactsSeeder extends \CodeIgniter\Database\Seeder
         // fzaninotto/Faker
         $faker = \Faker\Factory::create('id_ID');
         for ($i = 0; $i < 50; $i++) {
-            $name = $faker->name;
-            $slug = url_title($name, '-', true);
+            $title = $faker->name;
+            $slug = url_title($title, '-', true);
             $data = [
-                'name' => $name,
+                'title' => $title,
                 'slug' => $slug,
-                'phone' => $faker->e164PhoneNumber,
-                'email' => $faker->safeEmail,
+                'author' => $faker->nik,
+                'publisher' => $faker->name,
+                'cover' => 'FishIn.jpeg',
                 'created_at' => Time::now(),
                 // 'updated_at' => Time::now(),
                 // 'deleted_at' => Time::now(),
             ];
-            $this->db->table('contacts')->insert($data);
+            $this->db->table('comics')->insert($data);
         }
 
 

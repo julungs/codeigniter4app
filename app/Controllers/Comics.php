@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\ComicsModel;
-use CodeIgniter\Validation\Rules;
 
 class Comics extends BaseController
 {
@@ -15,9 +14,25 @@ class Comics extends BaseController
 
     public function index()
     {
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword) {
+            $comics = $this->comicsModel->searchComics($keyword);
+        } else {
+            $comics = $this->comicsModel;
+        }
+        $perPage = 5;
+        $group = 'comics';
+        $currentPage = $this->request->getVar('page_comics') ? $this->request->getVar('page_comics') : 1;
+        $pagination = 'comicsPagination';
         $data = [
             'title' => 'Comics List',
-            'comics' => $this->comicsModel->getComics()
+            // 'comics' => $comics->getComics(),
+            'comics' => $comics->paginate($perPage, $group),
+            'pager' => $comics->pager,
+            'perPage' => $perPage,
+            'group' => $group,
+            'currentPage' => $currentPage,
+            'pagination' => $pagination
         ];
         return view('comics/index', $data);
     }
@@ -44,7 +59,7 @@ class Comics extends BaseController
     {
         if (!$this->validate([
             'title' => [
-                'rules' => 'required|is_unique[comics.title]',
+                'rules' => 'required[comics.title]|is_unique[comics.title]',
                 'errors' => [
                     'required' => 'The title field is required.',
                     'is_unique' => 'The comic\'s title must be unique OR similar comic\'s title is already exist.'
@@ -84,8 +99,8 @@ class Comics extends BaseController
             'publisher' => $this->request->getVar('publisher'),
             'cover' => $coverTitle
         ]);
-        session()->setFlashdata('Message', 'Data Successfully Added.');
-        return redirect()->to('/comics');
+        session()->setFlashdata('Message', 'ADDED.');
+        return redirect()->to('/comics' . '/' . $slug);
     }
 
     public function delete($id)
@@ -95,7 +110,7 @@ class Comics extends BaseController
             unlink('img/' . $comics['cover']);
         }
         $this->comicsModel->delete($id);
-        session()->setFlashdata('Message', 'Data Successfully Deleted.');
+        session()->setFlashdata('Message', 'DELETED.');
         return redirect()->to('/comics');
     }
 
@@ -112,7 +127,7 @@ class Comics extends BaseController
     public function update($id)
     {
         $oldComics = $this->comicsModel->getComics($this->request->getVar('slug'));
-        $title_rule = $oldComics['title'] == $this->request->getVar('title') ? 'required' : 'required|is_unique[comics.title]';
+        $title_rule = $oldComics['title'] == $this->request->getVar('title') ? 'required[comics.title]' : 'required[comics.title]|is_unique[comics.title]';
         if (!$this->validate([
             'title' => [
                 'rules' => $title_rule,
@@ -148,7 +163,6 @@ class Comics extends BaseController
             $coverTitle = $coverFile->getRandomName();
             $coverFile->move('img', $coverTitle);
             if ($oldCover != 'FishIn.jpeg') {
-                // unlink('img/' . $comics['cover']);
                 unlink('img/' . $oldCover);
             }
         }
@@ -161,7 +175,7 @@ class Comics extends BaseController
             'publisher' => $this->request->getVar('publisher'),
             'cover' => $coverTitle
         ]);
-        session()->setFlashdata('Message', 'Data Successfully Updated.');
-        return redirect()->to('/comics');
+        session()->setFlashdata('Message', 'UPDATED.');
+        return redirect()->to('/comics' . '/' . $slug);
     }
 }

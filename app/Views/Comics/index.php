@@ -5,11 +5,11 @@
     <h2 class="mt-2">Comic List</h2>
     <div class="row">
         <div class="col-md-5">
-            <form action="phpp <?= base_url('contacts'); ?>" method="post">
+            <form action="" method="post">
                 <div class="input-group mb-1">
                     <input type="text" class="form-control" placeholder="Search Keyword..." name="keyword">
                     <div class="input-group-append">
-                        <input class="btn btn-primary" type="submit" name="submit">
+                        <button class="btn btn-primary" type="submit" name="submit">Search</button>
                     </div>
                 </div>
             </form>
@@ -20,7 +20,7 @@
             <a href="/comics/create" class="btn btn-primary my-3">Add Comics List Form</a>
             <?php if (session()->getFlashdata('Message')) : ?>
                 <div class="alert alert-success" role="alert">
-                    <?= session()->getFlashdata('Message'); ?>
+                    Data <span class="font-weight-bold"><?= $comics['title']; ?></span> Successfully <span class="font-weight-bold"><?= session()->getFlashdata('Message'); ?></span>
                 </div>
             <?php endif; ?>
             <table class="table table-sm">
@@ -33,19 +33,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1; ?>
-                    <?php foreach ($comics as $c) : ?>
+                    <?php $i = 1 + ($perPage * ($currentPage - 1)); ?>
+                    <?php foreach ($comics as $comics) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
-                            <td><img src="/img/<?= $c['cover']; ?>" class="cover" alt=""></td>
-                            <td><?= $c['title']; ?></td>
+                            <td><img src="/img/<?= $comics['cover']; ?>" class="cover" alt=""></td>
+                            <td><?= $comics['title']; ?></td>
                             <td>
-                                <a href="/comics/<?= $c['slug']; ?>" class="btn btn-success">Detail</a>
+                                <a href="/comics/<?= $comics['slug']; ?>" class="btn btn-success">Detail</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?= $pager->links($group, $pagination); ?>
         </div>
     </div>
 </div>

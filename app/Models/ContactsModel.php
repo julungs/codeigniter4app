@@ -7,8 +7,21 @@ use CodeIgniter\Model;
 class ContactsModel extends Model
 {
     protected $table = 'contacts';
-    protected $useTimestamps = true;
+    protected $primaryKey = 'id';
+
+    protected $returnType     = 'array';
+    protected $useSoftDeletes = true;
+
     protected $allowedFields = ['name', 'slug', 'phone', 'email'];
+
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
+
+    // protected $validationRules    = [];
+    // protected $validationMessages = [];
+    // protected $skipValidation     = false;
 
     public function getContacts($slug = false)
     {
@@ -20,6 +33,6 @@ class ContactsModel extends Model
 
     public function searchContacts($keyword)
     {
-        return $this->table('contacts')->like('email', '%' . $keyword . '%');
+        return $this->table('contacts')->like('name', '%' . $keyword . '%');
     }
 }

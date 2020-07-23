@@ -9,7 +9,7 @@
                 <div class="form-group row">
                     <label for="name" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('name')) ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?= old('name'); ?>" autocomplete="off">
+                        <input type="text" class="form-control <?= ($validation->hasError('name')) ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?= old('name'); ?>" required>
                         <div class="invalid-feedback">
                             <?= $validation->getError('name'); ?>
                         </div>
@@ -18,7 +18,7 @@
                 <div class="form-group row">
                     <label for="phone" class="col-sm-2 col-form-label">Phone</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('phone')) ? 'is-invalid' : ''; ?>" id="phone" name="phone" value="<?= old('phone'); ?>" minlength="12" maxlength="14" autocomplete="off">
+                        <input type="text" class="form-control <?= ($validation->hasError('phone')) ? 'is-invalid' : ''; ?>" id="phone" name="phone" value="<?= old('phone'); ?>" minlength="12" maxlength="14" required>
                         <div class="invalid-feedback">
                             <?= $validation->getError('phone'); ?>
                         </div>
@@ -27,7 +27,7 @@
                 <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?= old('email'); ?>" autocomplete="off">
+                        <input type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?= old('email'); ?>" required>
                         <div class="invalid-feedback">
                             <?= $validation->getError('email'); ?>
                         </div>
