@@ -41,7 +41,7 @@ class Contacts extends BaseController
     {
         $data = [
             'title' => 'Contact Detail',
-            'contacts' => $this->contactsModel->getContacts($slug)
+            'contact' => $this->contactsModel->getContacts($slug)
         ];
         return view('contacts/detail', $data);
     }
@@ -103,7 +103,7 @@ class Contacts extends BaseController
         $data = [
             'title' => 'Edit contacts',
             'validation' => \config\services::validation(),
-            'contacts' => $this->contactsModel->getContacts($slug)
+            'contact' => $this->contactsModel->getContacts($slug)
         ];
         return view('contacts/edit', $data);
     }

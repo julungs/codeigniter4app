@@ -10,13 +10,13 @@
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item <?= $title == 'About Me' ? 'active' : '' ?>">
-                    <a class="nav-link" href="/Pages/about">About</a>
+                    <a class="nav-link" href="/pages/about">About</a>
                 </li>
                 <li class="nav-item <?= $title == 'Contacts List' ? 'active' : '' ?>">
-                    <a class="nav-link" href="/Contacts">Contacts</a>
+                    <a class="nav-link" href="/contacts">Contacts</a>
                 </li>
                 <li class="nav-item <?= $title == 'Comics List' ? 'active' : '' ?>">
-                    <a class="nav-link" href="/Comics">Comics</a>
+                    <a class="nav-link" href="/comics">Comics</a>
                 </li>
 
             </ul>

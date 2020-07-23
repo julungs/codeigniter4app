@@ -20,7 +20,7 @@
             <a href="/comics/create" class="btn btn-primary my-3">Add Comics List Form</a>
             <?php if (session()->getFlashdata('Message')) : ?>
                 <div class="alert alert-success" role="alert">
-                    Data <span class="font-weight-bold"><?= $comics['title']; ?></span> Successfully <span class="font-weight-bold"><?= session()->getFlashdata('Message'); ?></span>
+                    Data Successfully <span class="font-weight-bold"><?= session()->getFlashdata('Message'); ?></span>
                 </div>
             <?php endif; ?>
             <table class="table table-sm">

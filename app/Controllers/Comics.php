@@ -41,7 +41,7 @@ class Comics extends BaseController
     {
         $data = [
             'title' => 'Comic Detail',
-            'comics' => $this->comicsModel->getComics($slug)
+            'comic' => $this->comicsModel->getComics($slug)
         ];
         return view('comics/detail', $data);
     }
@@ -119,7 +119,7 @@ class Comics extends BaseController
         $data = [
             'title' => 'Edit Comics',
             'validation' => \config\services::validation(),
-            'comics' => $this->comicsModel->getComics($slug)
+            'comic' => $this->comicsModel->getComics($slug)
         ];
         return view('comics/edit', $data);
     }
