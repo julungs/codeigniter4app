@@ -35,7 +35,6 @@ $routes->get('/', 'Pages::index');
 // CONTACTS
 $routes->get('/contacts/create', 'Contacts::create');
 $routes->get('/contacts/edit/(:segment)', 'Contacts::edit/$1');
-// $routes->get('/contacts/(:num)', 'Contacts::index/$1');
 $routes->delete('/contacts/(:num)', 'Contacts::delete/$1');
 $routes->get('/contacts/(:any)', 'Contacts::detail/$1');
 // COMICS

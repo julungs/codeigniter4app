@@ -20,6 +20,6 @@ class ContactsModel extends Model
 
     public function searchContacts($keyword)
     {
-        return $this->table('contacts')->like('name', $keyword);
+        return $this->table('contacts')->like('email', '%' . $keyword . '%');
     }
 }

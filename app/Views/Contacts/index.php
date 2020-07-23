@@ -6,8 +6,9 @@
     <div class="row">
         <div class="col-md-5">
             <form action="" method="post">
+                <?= csrf_field(); ?>
                 <div class="input-group mb-1">
-                    <input type="text" class="form-control" placeholder="Search Keyword..." name="keyword" autocomplete="off" autofocus>
+                    <input type="text" class="form-control" placeholder="Search Keyword..." name="keyword" autocomplete="off">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit" name="submit">Search</button>
                     </div>
@@ -35,19 +36,19 @@
                 </thead>
                 <tbody>
                     <?php $i = 1 + ($perPage * ($currentPage - 1)); ?>
-                    <?php foreach ($contacts as $c) : ?>
+                    <?php foreach ($contacts as $contacts) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
-                            <td><?= $c['name']; ?></td>
-                            <td><?= $c['phone']; ?></td>
-                            <td><?= $c['email']; ?></td>
+                            <td><?= $contacts['name']; ?></td>
+                            <td><?= $contacts['phone']; ?></td>
+                            <td><?= $contacts['email']; ?></td>
                             <td>
-                                <a href="/contacts/<?= $c['slug']; ?>" class="btn btn-success">Detail</a>
-                                <a href="/contacts/edit/<?= $c['slug']; ?>" class="btn btn-warning">Edit</a>
-                                <form action="/contacts/<?= $c['id']; ?>" method="post" class="d-inline">
+                                <a href="/contacts/<?= $contacts['slug']; ?>" class="btn btn-success">Detail</a>
+                                <a href="/contacts/edit/<?= $contacts['slug']; ?>" class="btn btn-warning">Edit</a>
+                                <form action="/contacts/<?= $contacts['id']; ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
                                     <input type="hidden" name="_method" value="Delete">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Do You Want to Delete Contact <?= $c['name']; ?>?');">Delete</button>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Do You Want to Delete Contact <?= $contacts['name']; ?>?');">Delete</button>
                                 </form>
                             </td>
                         </tr>

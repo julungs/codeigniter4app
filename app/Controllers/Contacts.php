@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\ContactsModel;
-use CodeIgniter\Validation\Rules;
 
 class Contacts extends BaseController
 {
@@ -38,8 +37,6 @@ class Contacts extends BaseController
         return view('contacts/index', $data);
     }
 
-
-
     public function detail($slug)
     {
         $data = [
@@ -62,19 +59,23 @@ class Contacts extends BaseController
     {
         if (!$this->validate([
             'name' => [
-                'rules' => 'required|is_unique[contacts.name]',
-                'errors' => [
-                    'required' => 'The name field is required.',
-                    'is_unique' => 'The contact\'s name must be unique OR similar contact\'s name is already exist.'
-                ]
+                'rules' => 'required[contacts.name]',
+                'errors' => 'The name field is required.',
             ],
             'phone' => [
-                'rules' => 'required[contacts.phone]',
-                'error' => 'The phone field is required.'
+                'rules' => 'required[contacts.phone]|min_length[12]|max_length[14]',
+                'errors' => [
+                    'The phone field is required.',
+                    'The minimum length is 12 characters.',
+                    'The maximum length is 14 characters.'
+                ]
             ],
             'email' => [
-                'rules' => 'required[contacts.email]',
-                'errors' => 'The email field is required.'
+                'rules' => 'required[contacts.email]|valid_email[contacts.email]',
+                'errors' => [
+                    'required' => 'The email field is required.',
+                    'valid_email' => 'The email is invalid.'
+                ]
             ]
         ])) {
             return redirect()->to('/contacts/create')->withInput();
@@ -87,7 +88,7 @@ class Contacts extends BaseController
             'email' => $this->request->getVar('email'),
         ]);
         session()->setFlashdata('Message', 'ADDED.');
-        return redirect()->to('/contacts');
+        return redirect()->to('/contacts' . '/' . $slug);
     }
 
     public function delete($id)
@@ -109,23 +110,25 @@ class Contacts extends BaseController
 
     public function update($id)
     {
-        $oldcontacts = $this->contactsModel->getContacts($this->request->getVar('slug'));
-        $name_rule = $oldcontacts['name'] == $this->request->getVar('name') ? 'required' : 'required|is_unique[contacts.name]';
         if (!$this->validate([
             'name' => [
-                'rules' => $name_rule,
-                'errors' => [
-                    'required' => 'The name field is required.',
-                    'is_unique' => 'The contact\'s name must be unique OR similar contact\'s name is already exist.'
-                ]
+                'rules' => 'required[contacts.name]',
+                'errors' => 'The name field is required.',
             ],
             'phone' => [
-                'rules' => 'required[contacts.phone]',
-                'errors' => 'The phone field is required.'
+                'rules' => 'required[contacts.name]|min_length[12]|max_length[14]',
+                'errors' => [
+                    'The phone field is required.',
+                    'The minimum length is 12 characters.',
+                    'The maximum length is 14 characters.'
+                ]
             ],
             'email' => [
-                'rules' => 'required[contacts.email]',
-                'errors' => 'The email field is required.'
+                'rules' => 'required[contacts.email]|valid_email[contacts.email]',
+                'errors' => [
+                    'required' => 'The email field is required.',
+                    'valid_email' => 'The email is invalid.'
+                ]
             ]
         ])) {
             return redirect()->to('/contacts/edit/' . $this->request->getVar('slug'))->withInput();
@@ -139,6 +142,6 @@ class Contacts extends BaseController
             'email' => $this->request->getVar('email'),
         ]);
         session()->setFlashdata('Message', 'UPDATED.');
-        return redirect()->to('/contacts');
+        return redirect()->to('/contacts' . '/' . $slug);
     }
 }
