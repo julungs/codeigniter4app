@@ -1,5 +1,4 @@
-<?= $this->extend('layout/template'); ?>
-
+<?= $this->extend('Layout/template'); ?>
 <?= $this->section('content'); ?>
 <div class="container">
     <h2 class="mt-2">Contacts List</h2>

@@ -34,7 +34,7 @@ class Contacts extends BaseController
             'currentPage' => $currentPage,
             'pagination' => $pagination
         ];
-        return view('contacts/index', $data);
+        return view('Contacts/index', $data);
     }
 
     public function detail($slug)
@@ -43,7 +43,7 @@ class Contacts extends BaseController
             'title' => 'Contact Detail',
             'contact' => $this->contactsModel->getContacts($slug)
         ];
-        return view('contacts/detail', $data);
+        return view('Contacts/detail', $data);
     }
 
     public function create()
@@ -52,7 +52,7 @@ class Contacts extends BaseController
             'title' => 'Add Contacts List Form',
             'validation' => \config\services::validation()
         ];
-        return view('contacts/create', $data);
+        return view('Contacts/create', $data);
     }
 
     public function save()
@@ -105,7 +105,7 @@ class Contacts extends BaseController
             'validation' => \config\services::validation(),
             'contact' => $this->contactsModel->getContacts($slug)
         ];
-        return view('contacts/edit', $data);
+        return view('Contacts/edit', $data);
     }
 
     public function update($id)

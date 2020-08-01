@@ -34,7 +34,7 @@ class Comics extends BaseController
             'currentPage' => $currentPage,
             'pagination' => $pagination
         ];
-        return view('comics/index', $data);
+        return view('Comics/index', $data);
     }
 
     public function detail($slug)
@@ -43,7 +43,7 @@ class Comics extends BaseController
             'title' => 'Comic Detail',
             'comic' => $this->comicsModel->getComics($slug)
         ];
-        return view('comics/detail', $data);
+        return view('Comics/detail', $data);
     }
 
     public function create()
@@ -52,7 +52,7 @@ class Comics extends BaseController
             'title' => 'Add Comics List Form',
             'validation' => \config\services::validation()
         ];
-        return view('comics/create', $data);
+        return view('Comics/create', $data);
     }
 
     public function save()
@@ -121,7 +121,7 @@ class Comics extends BaseController
             'validation' => \config\services::validation(),
             'comic' => $this->comicsModel->getComics($slug)
         ];
-        return view('comics/edit', $data);
+        return view('Comics/edit', $data);
     }
 
     public function update($id)

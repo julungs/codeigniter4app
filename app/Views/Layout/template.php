@@ -17,7 +17,7 @@
 
 <body>
 
-    <?= $this->include('layout/header'); ?>
+    <?= $this->include('Layout/header'); ?>
 
     <?= $this->renderSection('content'); ?>
 
